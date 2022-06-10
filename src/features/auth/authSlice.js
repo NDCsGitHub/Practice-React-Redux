@@ -23,7 +23,7 @@ const initialState = {
 
 
 // Register User, export this so we can use in it other components
-export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
+const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
         return await authService.register(user)
     } catch (error) {
@@ -39,9 +39,7 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 })
 
 
-
-
-export const authSlice = createSlice({
+const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -68,12 +66,12 @@ export const authSlice = createSlice({
             })
     }
 })
-
+const { reset } = authSlice.actions
 
 
 
 // export reset and reducer
-export const { reset } = authSlice.actions
+export { authSlice, reset, register }
 
 // export reducer to global state = store.js 
 export default authSlice.reducer
