@@ -10,18 +10,34 @@ import Spinner from '../components/Spinner'
 
 function Register() {
 
-    // define form data state
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        password2: '',
-        admin: '',
-    })
-    const { name, email, password, password2, admin } = formData
-
     // define navigate
     const navigate = useNavigate()
+
+
+
+
+
+    // define form data state
+    const [formData, setFormData] = useState({
+        Name: '',
+        Email: '',
+        Password: '',
+        Password2: '',
+        Admin: '',
+    })
+    const { Name, Email, Password, Password2, Admin } = formData
+
+    // change input field data on change
+    const handleOnChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+
+
+
 
     // define dispatch to send data to global state
     const dispatch = useDispatch()
@@ -32,7 +48,7 @@ function Register() {
     )
 
 
-
+    // check for error, then reset the state
     useEffect(() => {
         if (isError) {
             toast.error(message)
@@ -45,23 +61,17 @@ function Register() {
 
 
 
-    const handleOnChange = (e) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }))
-    }
 
+    // submit data via dispatch
     const onSubmit = (e) => {
         e.preventDefault()
-
-        if (password !== password2) {
+        if (Password !== Password2) {
             toast.error('Password do not match')
         } else {
             const userData = {
-                name,
-                email,
-                password,
+                Name,
+                Email,
+                Password,
             }
             dispatch(register(userData))
         }
@@ -94,8 +104,9 @@ function Register() {
                         <input
                             type='text'
                             className='form-control'
-                            name='name' id='name'
-                            value={name}
+                            name='Name'
+                            id='Name'
+                            value={Name}
                             placeholder='Name'
                             onChange={(e) => {
                                 handleOnChange(e)
@@ -105,8 +116,8 @@ function Register() {
                         <input
                             type='email'
                             className='form-control'
-                            name='email' id='email'
-                            value={email}
+                            name='Email' id='Email'
+                            value={Email}
                             placeholder='Email'
                             onChange={(e) => {
                                 handleOnChange(e)
@@ -116,9 +127,9 @@ function Register() {
                         <input
                             type='password'
                             className='form-control'
-                            name='password' id='password'
-                            value={password}
-                            placeholder='password'
+                            name='Password' id='Password'
+                            value={Password}
+                            placeholder='Password'
                             onChange={(e) => {
                                 handleOnChange(e)
                             }}
@@ -127,8 +138,8 @@ function Register() {
                         <input
                             type='password'
                             className='form-control'
-                            name='password2' id='password2'
-                            value={password2}
+                            name='Password2' id='Password2'
+                            value={Password2}
                             placeholder='Confirm Password'
                             onChange={(e) => {
                                 handleOnChange(e)
@@ -138,8 +149,8 @@ function Register() {
                         <input
                             type='text'
                             className='form-control'
-                            name='admin' id='admin'
-                            value={admin}
+                            name='Admin' id='Admin'
+                            value={Admin}
                             placeholder='Admin'
                             onChange={(e) => {
                                 handleOnChange(e)

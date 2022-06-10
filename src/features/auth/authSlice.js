@@ -33,6 +33,7 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
             error.message ||
             error.toString()
 
+        // return and save the message in the state, so later we can useSelector to show error in register component
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -41,7 +42,7 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 
 
 export const authSlice = createSlice({
-    name: 'autha',
+    name: 'auth',
     initialState,
     reducers: {
         reset: (state) => {
@@ -67,6 +68,9 @@ export const authSlice = createSlice({
             })
     }
 })
+
+
+
 
 // export reset and reducer
 export const { reset } = authSlice.actions
