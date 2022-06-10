@@ -35,7 +35,7 @@ function Login() {
                 <h1>
                     <FaSignInAlt /> Register
                 </h1>
-                <p>Please create an account</p>
+                <p>Login to Add Product</p>
             </section>
 
 
