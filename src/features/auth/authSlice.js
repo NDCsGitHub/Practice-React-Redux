@@ -38,6 +38,11 @@ const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     }
 })
 
+// logout user
+const logout = createAsyncThunk('auth/logout', async () => {
+    await authService.logout()
+})
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -54,16 +59,22 @@ const authSlice = createSlice({
         builder
             .addCase(register.pending, (state) => {
                 state.isLoading = true
-            }).addCase(register.fulfilled, (state, action) => {
+            })
+            .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
                 state.user = action.payload
-            }).addCase(register.rejected, (state, action) => {
+            })
+            .addCase(register.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
                 state.user = null
             })
+            .addCase(logout.fulfilled, (state) => {
+                state.user = null
+            })
+
     }
 })
 const { reset } = authSlice.actions
@@ -71,7 +82,7 @@ const { reset } = authSlice.actions
 
 
 // export reset and reducer
-export { authSlice, reset, register }
+export { authSlice, reset, register, logout }
 
 // export reducer to global state = store.js 
 export default authSlice.reducer
