@@ -6,5 +6,5 @@ export const store = configureStore({
     auth: authReducer,
 
   },
-  devTools: true,
+  // devTools: true,
 });

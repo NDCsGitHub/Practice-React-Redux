@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+
 
 
 // get user from localstorage
 const user = JSON.parse(localStorage.getItem('user'))
 
 
+// define initial states
 const initialState = {
     user: user ? user : null,
     isError: false,
@@ -17,7 +17,12 @@ const initialState = {
 }
 
 
-// Register User
+
+
+
+
+
+// Register User, export this so we can use in it other components
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
         return await authService.register(user)
@@ -36,7 +41,7 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 
 
 export const authSlice = createSlice({
-    name: 'auth',
+    name: 'autha',
     initialState,
     reducers: {
         reset: (state) => {
@@ -63,5 +68,8 @@ export const authSlice = createSlice({
     }
 })
 
+// export reset and reducer
 export const { reset } = authSlice.actions
+
+// export reducer to global state = store.js 
 export default authSlice.reducer
