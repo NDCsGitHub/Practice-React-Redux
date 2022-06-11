@@ -1,19 +1,21 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
-
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { login, reset } from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 
 function Login() {
 
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
+        Email: '',
+        Password: '',
     })
-    const { email, password } = formData
-
-
-
-
+    const { Email, Password } = formData
     const handleOnChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -21,12 +23,39 @@ function Login() {
         }))
     }
 
+    const dispatch = useDispatch()
+    const { user, isLoading, isError, isSuccess, message } = useSelector(
+        (state) => state.auth
+    )
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+        }
+        if (isSuccess) {
+            navigate('/')
+        }
+
+        dispatch(reset())
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
+
     const onSubmit = (e) => {
         e.preventDefault()
 
+        const userData = {
+            Email,
+            Password,
+        }
 
+        dispatch(login(userData))
 
     }
+
+    if (isLoading) {
+        return <Spinner />
+    }
+
 
     return (
 
@@ -44,10 +73,10 @@ function Login() {
                     <div className='form-group'>
 
                         <input
-                            type='email'
+                            type='Email'
                             className='form-control'
-                            name='email' id='email'
-                            value={email}
+                            name='Email' id='Email'
+                            value={Email}
                             placeholder='Email'
                             onChange={(e) => {
                                 handleOnChange(e)
@@ -55,11 +84,11 @@ function Login() {
                         />
 
                         <input
-                            type='password'
+                            type='Password'
                             className='form-control'
-                            name='password' id='password'
-                            value={password}
-                            placeholder='password'
+                            name='Password' id='Password'
+                            value={Password}
+                            placeholder='Password'
                             onChange={(e) => {
                                 handleOnChange(e)
                             }}
