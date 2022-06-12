@@ -16,20 +16,15 @@ const productsSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        reset: (state) => {
-            state.isLoading = false
-            state.isSuccess = false
-            state.isError = false
-            state.message = ''
-        }
+        reset: (state) => initialState
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase()
-            .addCase()
-            .addCase()
-            .addCase()
-    }
+    // extraReducers: (builder) => {
+    //     builder
+    //         .addCase()
+    //         .addCase()
+    //         .addCase()
+    //         .addCase()
+    // }
 })
 const { reset } = productsSlice.actions
 
