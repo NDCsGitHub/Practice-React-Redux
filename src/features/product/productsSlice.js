@@ -31,10 +31,10 @@ const productsSlice = createSlice({
             .addCase()
     }
 })
-
+const { reset } = productsSlice.actions
 
 // export
-
+export { productsSlice, reset }
 
 // default export reducer to global state = store.js
-export default authSlice.reducer
+export default productsSlice.reducer
