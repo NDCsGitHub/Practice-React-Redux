@@ -13,10 +13,6 @@ function Register() {
     // define navigate
     const navigate = useNavigate()
 
-
-
-
-
     // define form data state
     const [formData, setFormData] = useState({
         Name: '',
@@ -34,10 +30,6 @@ function Register() {
             [e.target.name]: e.target.value
         }))
     }
-
-
-
-
 
     // define dispatch to send data to global state
     const dispatch = useDispatch()
@@ -59,9 +51,6 @@ function Register() {
         dispatch(reset())
     }, [user, isError, isSuccess, message, navigate, dispatch])
 
-
-
-
     // submit data via dispatch
     const onSubmit = (e) => {
         e.preventDefault()
@@ -76,8 +65,6 @@ function Register() {
             dispatch(register(userData))
         }
     }
-
-
 
 
     if (isLoading) {
