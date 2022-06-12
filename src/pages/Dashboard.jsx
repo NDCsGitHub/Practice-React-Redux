@@ -9,6 +9,7 @@ function Dashboard() {
     const navigate = useNavigate()
     const { user } = useSelector((state) => state.auth)
 
+    // check user, if user state is missing, redirect to login
     useEffect(() => {
         if (!user) {
             navigate('/login')
