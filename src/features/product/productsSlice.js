@@ -17,7 +17,9 @@ const initialState = {
 const createProduct = createAsyncThunk('products/.create', async (productData, thunkAPI) => {
 
     try {
-        return await productService.createProduct(productData)
+        // get token from user state using thunkAPi
+        const token = thunkAPI.getState().auth.user.data.token
+        return await productService.createProduct(productData, token)
 
     } catch (error) {
         // check for error the message
@@ -39,18 +41,27 @@ const productsSlice = createSlice({
     reducers: {
         reset: (state) => initialState
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase()
-    //         .addCase()
-    //         .addCase()
-    //         .addCase()
-    // }
+    extraReducers: (builder) => {
+        builder
+            .addCase(createProduct.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(createProduct.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.products.push(action.payload)
+            })
+            .addCase(createProduct.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+    }
 })
 const { reset } = productsSlice.actions
 
 // export
-export { productsSlice, reset, }
+export { productsSlice, reset, createProduct }
 
 // default export reducer to global state = store.js
 export default productsSlice.reducer

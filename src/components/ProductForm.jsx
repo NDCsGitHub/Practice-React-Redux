@@ -1,35 +1,51 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { createProduct } from '../features/product/productsSlice'
-
+import { toast } from 'react-toastify'
 
 
 
 
 export default function ProductForm() {
 
-    const [Product_Name_EN, setProduct_Name_EN] = useState('')
-    const [Product_Name_CN, setProduct_Name_CN] = useState('')
-    const [Product_Type, setProduct_Type] = useState('')
-    const [Product_Description, setProduct_Description] = useState('')
+    const [productNameEN, setProductNameEN] = useState('')
+    const [productNameCN, setProductNameCN] = useState('')
+    const [productType, setProductType] = useState('')
+    const [productDescription, setProductDescription] = useState('')
 
 
 
     const dispatch = useDispatch()
+    const { products, isLoading, isError, isSuccess, message } = useSelector(
+        (state) => state.products
+    )
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        dispatch(createProduct({
+        const productData = {
+            productNameEN,
+            productNameCN,
+            productType,
+            productDescription,
+        }
 
-        }))
+        dispatch(createProduct({ productData }))
 
-        setProduct_Name_EN('')
-        setProduct_Name_CN('')
-        setProduct_Type('')
-        setProduct_Description('')
+        setProductNameEN('')
+        setProductNameCN('')
+        setProductType('')
+        setProductDescription('')
     }
 
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+        }
+        if (isSuccess) {
+            toast.success('Product Added')
+        }
+    }, [products, isError, isLoading, isSuccess, message])
 
 
     return (
@@ -42,9 +58,9 @@ export default function ProductForm() {
                         type='text'
                         name='text'
                         id='text'
-                        value={Product_Name_EN}
+                        value={productNameEN}
                         onChange={(e) => {
-                            setProduct_Name_EN(e.target.value)
+                            setProductNameEN(e.target.value)
                         }}
                     />
                     <input
@@ -52,9 +68,9 @@ export default function ProductForm() {
                         type='text'
                         name='text'
                         id='text'
-                        value={Product_Name_CN}
+                        value={productNameCN}
                         onChange={(e) => {
-                            setProduct_Name_CN(e.target.value)
+                            setProductNameCN(e.target.value)
                         }}
                     />
                     <input
@@ -62,9 +78,9 @@ export default function ProductForm() {
                         type='text'
                         name='text'
                         id='text'
-                        value={Product_Type}
+                        value={productType}
                         onChange={(e) => {
-                            setProduct_Type(e.target.value)
+                            setProductType(e.target.value)
                         }}
                     />
                     <input
@@ -72,9 +88,9 @@ export default function ProductForm() {
                         type='text'
                         name='text'
                         id='text'
-                        value={Product_Description}
+                        value={productDescription}
                         onChange={(e) => {
-                            setProduct_Description(e.target.value)
+                            setProductDescription(e.target.value)
                         }}
                     />
                 </div>
