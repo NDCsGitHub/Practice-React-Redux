@@ -30,7 +30,7 @@ export default function ProductForm() {
             productDescription,
         }
 
-        dispatch(createProduct({ productData }))
+        dispatch(createProduct({ ...productData }))
 
         setProductNameEN('')
         setProductNameCN('')

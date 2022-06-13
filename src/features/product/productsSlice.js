@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import productService from './productsService'
 
 
+
 // define initial state
 const initialState = {
     products: [],
