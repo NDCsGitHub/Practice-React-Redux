@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { createProduct } from '../features/product/productsSlice'
 
 
 
@@ -19,7 +20,9 @@ export default function ProductForm() {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        dispatch()
+        dispatch(createProduct({
+
+        }))
 
         setProduct_Name_EN('')
         setProduct_Name_CN('')
