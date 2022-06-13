@@ -22,6 +22,7 @@ const initialState = {
 
 
 
+
 // Register User, export this so we can use in it other components
 const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
@@ -59,6 +60,12 @@ const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 const logout = createAsyncThunk('auth/logout', async () => {
     await authService.logout()
 })
+
+
+
+
+
+
 
 
 const authSlice = createSlice({
