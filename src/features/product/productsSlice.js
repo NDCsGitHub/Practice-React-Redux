@@ -53,7 +53,7 @@ const createProduct = createAsyncThunk('products/create', async (productData, th
 
 // define initial state
 const initialState = {
-    products: {},
+    products: { data: [] },
     isError: false,
     isSuccess: false,
     isLoading: false,
