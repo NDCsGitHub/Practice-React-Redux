@@ -29,8 +29,6 @@ const createProduct = async (productData, token) => {
 
 
 
-
-
 const productService = {
     createProduct,
 
