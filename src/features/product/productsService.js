@@ -6,6 +6,24 @@ const API_URL = '/api/products'
 
 
 
+// get all goals
+const getAllProducts = async (token) => {
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+
+        }
+    }
+
+    const response = await axios.get(API_URL, config)
+
+    return response.data
+}
+
+
+
+
 
 // create a new product
 const createProduct = async (productData, token) => {
@@ -19,8 +37,9 @@ const createProduct = async (productData, token) => {
 
     const response = await axios.post(API_URL, productData, config)
 
-    return response.data
+    return response.data.data
 }
+
 
 
 
@@ -31,7 +50,7 @@ const createProduct = async (productData, token) => {
 
 const productService = {
     createProduct,
-
+    getAllProducts,
 }
 
 export default productService

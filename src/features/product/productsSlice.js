@@ -5,7 +5,7 @@ import productService from './productsService'
 
 // define initial state
 const initialState = {
-    products: [],
+    products: {},
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -14,8 +14,29 @@ const initialState = {
 
 
 
+// get all goals
+const getAllProducts = createAsyncThunk('products/getAll', async (_, thunkAPI) => {
+    try {
+        // get token from user state using thunkAPi
+        const token = thunkAPI.getState().auth.user.data.token
+        return await productService.getAllProducts(token)
+
+    } catch (error) {
+        // check for error the message
+        const message = (error.response && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString()
+
+        // return and save the message in the state, so later we can useSelector to show error in register component
+        return thunkAPI.rejectWithValue(message)
+    }
+
+})
+
+
+
 // create new Product
-const createProduct = createAsyncThunk('products/.create', async (productData, thunkAPI) => {
+const createProduct = createAsyncThunk('products/create', async (productData, thunkAPI) => {
 
     try {
         // get token from user state using thunkAPi
@@ -36,6 +57,13 @@ const createProduct = createAsyncThunk('products/.create', async (productData, t
 
 
 
+
+
+
+
+
+
+
 const productsSlice = createSlice({
     name: 'products',
     initialState,
@@ -44,15 +72,32 @@ const productsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // create Product
             .addCase(createProduct.pending, (state) => {
                 state.isLoading = true
             })
             .addCase(createProduct.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.products.push(action.payload)
+                console.log(state.products)
+                state.products['data'].push(action.payload)
             })
             .addCase(createProduct.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+
+            // get all products
+            .addCase(getAllProducts.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllProducts.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.products = action.payload
+            })
+            .addCase(getAllProducts.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
@@ -62,7 +107,7 @@ const productsSlice = createSlice({
 const { reset } = productsSlice.actions
 
 // export
-export { productsSlice, reset, createProduct }
+export { productsSlice, reset, createProduct, getAllProducts }
 
 // default export reducer to global state = store.js
 export default productsSlice.reducer
