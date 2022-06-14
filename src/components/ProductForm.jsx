@@ -20,6 +20,7 @@ export default function ProductForm() {
         (state) => state.products
     )
 
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -37,6 +38,7 @@ export default function ProductForm() {
         setProductType('')
         setProductDescription('')
     }
+
 
     useEffect(() => {
         if (isError) {

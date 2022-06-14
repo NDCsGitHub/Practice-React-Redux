@@ -5,6 +5,7 @@ import ProductForm from '../components/ProductForm'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
 import { getAllProducts, reset } from '../features/product/productsSlice'
+import ProductItem from '../components/ProductItem'
 
 function Dashboard() {
 
@@ -48,6 +49,24 @@ function Dashboard() {
             </section>
 
             <ProductForm />
+
+
+            <section className='content'>
+                {products.data.length > 0 ? (
+                    <div className='products'>
+                        {products.data.map((product) => (
+                            <ProductItem
+                                key={product._id}
+                                product={product}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <h3>'No Products Available'</h3>
+                )}
+            </section>
+
+
         </>
     )
 }

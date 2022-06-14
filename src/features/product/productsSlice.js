@@ -5,7 +5,7 @@ import productService from './productsService'
 
 
 
-// get all goals
+// get all products
 const getAllProducts = createAsyncThunk('products/getAll', async (_, thunkAPI) => {
     try {
         // get token from user state using thunkAPi
