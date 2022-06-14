@@ -3,15 +3,6 @@ import productService from './productsService'
 
 
 
-// define initial state
-const initialState = {
-    products: {},
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: ''
-}
-
 
 
 // get all goals
@@ -60,10 +51,16 @@ const createProduct = createAsyncThunk('products/create', async (productData, th
 
 
 
+// define initial state
+const initialState = {
+    products: {},
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: ''
+}
 
-
-
-
+// create product slice
 const productsSlice = createSlice({
     name: 'products',
     initialState,
