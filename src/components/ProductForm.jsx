@@ -16,7 +16,7 @@ export default function ProductForm() {
 
 
     const dispatch = useDispatch()
-    const { products, isLoading, isError, isSuccess, message } = useSelector(
+    const { isLoading, isError, isSuccess, message } = useSelector(
         (state) => state.products
     )
 
