@@ -47,6 +47,26 @@ const createProduct = createAsyncThunk('products/create', async (productData, th
 
 
 
+// delete a Product
+const deleteProduct = createAsyncThunk('products/delete', async (id, thunkAPI) => {
+
+    try {
+        // get token from user state using thunkAPi
+        const token = thunkAPI.getState().auth.user.data.token
+        return await productService.deleteProduct(id, token)
+
+    } catch (error) {
+        // check for error the message
+        const message = (error.response && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString()
+
+        // return and save the message in the state, so later we can useSelector to show error in register component
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
 
 
 
@@ -76,7 +96,6 @@ const productsSlice = createSlice({
             .addCase(createProduct.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                console.log(state.products)
                 state.products['data'].push(action.payload)
             })
             .addCase(createProduct.rejected, (state, action) => {
@@ -99,12 +118,31 @@ const productsSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
+
+            // delete product
+            .addCase(deleteProduct.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(deleteProduct.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.products['data'] = state.products['data'].filter((product) => {
+                    return product._id !== action.payload._id
+                })
+            })
+            .addCase(deleteProduct.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
     }
+
+
 })
 const { reset } = productsSlice.actions
 
 // export
-export { productsSlice, reset, createProduct, getAllProducts }
+export { productsSlice, reset, createProduct, getAllProducts, deleteProduct }
 
 // default export reducer to global state = store.js
 export default productsSlice.reducer

@@ -47,7 +47,7 @@ export default function ProductForm() {
         if (isSuccess) {
             toast.success('Product Added')
         }
-    }, [products, isError, isLoading, isSuccess, message])
+    }, [isError, isLoading, isSuccess, message])
 
 
     return (

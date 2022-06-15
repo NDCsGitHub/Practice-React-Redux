@@ -1,6 +1,11 @@
 import React from 'react'
-
+import { useDispatch } from 'react-redux'
+import { deleteProduct } from '../features/product/productsSlice'
 function ProductItem({ product }) {
+
+    const dispatch = useDispatch()
+
+
     return (
         <div className='products'>
             <div>
@@ -13,6 +18,9 @@ function ProductItem({ product }) {
             <h2>{product.Product_Description}</h2>
             <button
                 className='close'
+                onClick={() => {
+                    dispatch(deleteProduct(product._id))
+                }}
             >X</button>
         </div>
     )
