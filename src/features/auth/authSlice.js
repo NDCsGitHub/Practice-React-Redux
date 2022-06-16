@@ -39,6 +39,8 @@ const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     }
 })
 
+
+
 // Login User, export this so we can use in it other components
 const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     try {
@@ -54,6 +56,7 @@ const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
         return thunkAPI.rejectWithValue(message)
     }
 })
+
 
 
 // logout user
