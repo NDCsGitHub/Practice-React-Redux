@@ -6,7 +6,7 @@ const API_URL = '/api/products'
 
 
 
-// get all goals
+// get all products
 const getAllProducts = async (token) => {
 
     const config = {
