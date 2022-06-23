@@ -41,6 +41,7 @@ const createProduct = async (productData, token) => {
 }
 
 
+
 // delete a product
 const deleteProduct = async (id, token) => {
     const config = {
